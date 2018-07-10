@@ -72,8 +72,5 @@ exports.run = function(allTests, options) {
     cwd: dir,
     env,
     stdio: "inherit"
-  }).catch(err => {
-    console.error("Error spawning mocha from marko-cli", err);
-    process.exit(1);
-  });
+  }).catch(() => process.exit(1));
 };

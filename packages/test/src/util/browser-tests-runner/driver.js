@@ -42,7 +42,10 @@ exports.start = async (href, options) => {
       ensureCalled(() => driver && driver.end());
 
       for (const capability of capabilities) {
-        const { testName } = (driver = connect(wdioOptions, capability));
+        const { testName } = (driver = connect(
+          wdioOptions,
+          capability
+        ));
         results[testName] = false;
 
         console.log(`\n${format(testName, "starting...")}\n`);
@@ -122,11 +125,11 @@ function connect({ viewport = DEFAULT_VIEWPORT, ...options }, capability) {
       }
     })
     .init()
-    .url("")
+    .windowHandleSize(viewport)
     .timeouts("script", timeout)
     .timeouts("implicit", timeout)
     .timeouts("page load", timeout)
-    .setViewportSize(viewport)
+    .url("")
     .then(() => () => {
       return driver.executeAsync(function(done) {
         window.__run_tests__(done);
